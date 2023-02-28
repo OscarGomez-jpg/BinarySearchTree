@@ -34,6 +34,7 @@ public class Main {
         bst.deleteNode(90);
         bst.deleteNode(70);
         bst.deleteNode(1);
+        bst.deleteNode(40);
         
         String newGraf = bst.printGraf();
 

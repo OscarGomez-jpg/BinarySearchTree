@@ -116,24 +116,37 @@ public class BinarySearchTree {
 
     public void deleteNode(int targetValue) {
         Node parent = searchParentByValue(targetValue);
-        Node target = parent.getLeft();
-        boolean isRight = false;
 
-        if (parent.getRight().getValue() == targetValue) {
-            target = parent.getRight();
-            isRight = true;
+        if (parent != null) {
+            Node target = parent.getLeft();
+            boolean isRight = false;
+    
+            if (parent.getRight().getValue() == targetValue) {
+                target = parent.getRight();
+                isRight = true;
+            }
+    
+            if (target == null) {
+                return;
+            }
+    
+            deleteNode(parent, target, isRight);
+    
+            target = null;
+        } else {
+            deleteNode(parent, root, false);
         }
-
-        if (parent == null || target == null) {
-            return;
-        }
-
-        deleteNode(parent, target, isRight);
-
-        target = null;
     }
 
     private void deleteNode(Node parent, Node target, boolean isRight) {
+        if (target == root) {
+            Node maximum = maximum(root.getLeft());
+            maximum.setRight(root.getRight());
+            parent = root.getLeft();
+            root = parent;
+            return;
+        }
+
         if (target.getLeft() == null && target.getRight() == null) {
             if (isRight) {
                 parent.setRight(null);
